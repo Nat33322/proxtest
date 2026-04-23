@@ -1,0 +1,102 @@
+<DOCTYPE="html">
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>New Tab</title>
+    <link rel="icon" type="image/x-icon" href="static.jpg">
+</head>
+<style>
+    body {
+        padding: 5px;
+        background-color: black;
+        color: cornflowerblue;
+    }
+    .SearchBar {
+        z-index: 0;
+        padding: 0px;
+        top: 100%;
+        width: 97%;
+        height: 100%;
+        left: 100%;
+        border-style: none;
+        border-width: 2px;
+        border-color: rgb(155, 155, 155);
+        background-color: black;
+        color: rgb(239, 237, 255);
+        background: none;
+        outline: none;
+    }
+    .SearchButton {
+        padding: 0px;
+        top: 100%;
+        aspect-ratio: 1;
+        float: right;
+        z-index: 1;
+        height: 100%;
+        border-style: outset;
+        border-width: 2px;
+        border-color: cornflowerblue;
+        border-radius: 100%;
+        background-color: black;
+        color: cornflowerblue;
+        text-align: center;
+    }
+    .SearchButton:active {
+        border-style: inset;
+    }
+    .WebsiteFrame {
+        padding: 0px;
+        height: 96%;
+        width: 100%;
+        border-width: 3px;
+        border-color: cornflowerblue;
+        background-color: #00010B;
+        color: cornflowerblue;
+        border-radius: 10px;
+
+    }
+    .SearchTab {
+        border-style: inset;
+        border-color: rgb(155, 155, 155);
+        border-radius: 10px;
+        height: 3%;
+        width: 100%;
+        top: 100%;
+        padding-left: 2px;
+    }
+</style>
+<body>
+<div class="SearchTab">
+&nbsp;
+<input type=text id="input" class="SearchBar">
+<button onclick="confirm()" class="SearchButton" id="SearchButton">⟳</button>
+</div>
+<iframe src="static.html" id="iframe" class="WebsiteFrame" allowfullscreen referrerpolicy="*" sandbox="allow-scripts" allowscripts></iframe>
+<script>
+const input = document.getElementById("input");
+input.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    confirm()
+  }
+});
+
+function confirm() {
+    if (!(document.getElementById("input").value == "")) {
+        if (!String(document.getElementById("input").value).includes("https://") && !String(document.getElementById("input").value).includes("http://") && !String(document.getElementById("input").value).includes("file://")) {
+            document.getElementById("iframe").src = "https://" + document.getElementById("input").value;
+        } else {
+            document.getElementById("iframe").src = document.getElementById("input").value;
+        }
+    } else {
+        document.getElementById("iframe").src = "static.html";
+    }
+    const timeoutID = setTimeout(() => {
+        const IframeDocument = document.getElementById("iframe").contentDocument || document.getElementById("iframe").contentWindow.document;
+        if (IframeDocument.getElementById("main-frame-error")) {
+            document.getElementById("iframe").src = "static.html";
+        }
+    }, 10000);
+}
+</script>
+</body>
+</html>
